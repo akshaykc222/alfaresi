@@ -56,3 +56,4 @@ grant update, delete on public.bookings to authenticated;
 - All write operations occur via API routes using the Service Role key.
 - Storage uploads go through `/api/upload/partner-image` and return a public URL.
 
+# alfaresi
