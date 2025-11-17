@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Alfaresi Admin Panel (Next.js + Supabase)
 
-## Getting Started
+## Setup
 
-First, run the development server:
+1) Create `.env.local` with:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NEXT_PUBLIC_SUPABASE_URL=https://zcsrlmhdmmxmmdhrvmlv.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpjc3JsbWhkbW14bW1kaHJ2bWx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMyNjU3ODMsImV4cCI6MjA3ODg0MTc4M30.Oh7DEy0SUoWGkg9IdiVK_8M51iNGS_3Ovjz8fjIFsgU
+# Optional for server-side writes and uploads
+SUPABASE_SERVICE_ROLE=
+NEXT_PUBLIC_SUPABASE_PROJECT_REF=zcsrlmhdmmxmmdhrvmlv
+NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET=projects
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2) Install deps and run:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm i
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
+- Auth: Email/password login at `/login`, protected routes via middleware
+- Navigation: Dashboard, Bookings, Partners, Settings
+- Dashboard: counts + recent bookings
+- Bookings: table view, server-side fetching, CSV export API
+- Partners: list view, ordered by position
+- Settings: env health checks (bucket + edge function)
 
-## Learn More
+## RLS Example Policies
+Partners (read for anon, write for authenticated):
+```sql
+-- Read
+create policy \"Public read partners\" on public.partners
+for select using (true);
+-- Write (admins)
+create policy \"Authenticated write partners\" on public.partners
+for all to authenticated using (auth.role() = 'authenticated') with check (auth.role() = 'authenticated');
+```
 
-To learn more about Next.js, take a look at the following resources:
+Bookings (deny public writes; allow admin to update status/delete):
+```sql
+-- Deny insert/update/delete by anon
+revoke insert, update, delete on public.bookings from anon;
+-- Allow authenticated update/delete
+grant update, delete on public.bookings to authenticated;
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy (Vercel)
+- Add env vars in Project Settings
+- Set `Build Command`: `npm run build`
+- Set `Output Directory`: `.next`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes
+- All write operations occur via API routes using the Service Role key.
+- Storage uploads go through `/api/upload/partner-image` and return a public URL.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

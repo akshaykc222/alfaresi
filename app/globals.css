@@ -2,7 +2,8 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  /* Tailwind blue-800 */
+  --foreground: #1e40af;
 }
 
 @theme inline {
@@ -12,15 +13,38 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Disable automatic dark scheme for admin to keep white + blue theme */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors bg-blue-600 text-white hover:bg-blue-700;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium transition-colors border border-blue-200 text-blue-800 hover:bg-blue-50;
+  }
+  .input {
+    @apply w-full rounded-md border border-blue-200 bg-white px-3 py-2 placeholder-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200;
+  }
+  .card {
+    @apply rounded-xl border border-blue-100 bg-white shadow-sm;
+  }
+  .card-padded {
+    @apply rounded-xl border border-blue-100 bg-white shadow-sm p-4 sm:p-6;
+  }
+  .table {
+    @apply min-w-full text-sm;
+  }
+  .table thead {
+    @apply bg-blue-50 text-blue-800;
+  }
+  .table th, .table td {
+    @apply px-3 py-2 text-left;
+  }
+  .table tr + tr {
+    @apply border-t;
+  }
 }
