@@ -1,0 +1,94 @@
+name: alfaresi
+description: "A new Flutter project."
+publish_to: "none"
+
+version: 1.0.1+11
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  dio: ^5.8.0+1
+  flutter_svg: ^2.0.17
+  go_router: ^14.8.1
+  go_transitions: ^0.8.0
+  url_launcher: ^6.3.1
+  video_player: ^2.9.5
+  intl: ^0.20.2
+  flutter_localizations:
+    sdk: flutter
+  flutter_localization:
+  provider: ^6.1.4
+  shared_preferences: ^2.5.3
+  lottie: ^3.3.1
+  scaled_app: ^2.3.0
+  device_preview: ^1.2.0
+  http: ^1.3.0
+  carousel_slider: ^5.0.0
+  device_info_plus: ^11.4.0
+  flutter_card_swiper: ^7.0.2
+  supabase_flutter: ^2.6.0
+  intl_phone_field: ^3.2.0
+  webview_flutter: ^4.9.0
+
+  # ✅ Custom curved_navigation_bar from Git
+  curved_navigation_bar:
+    git:
+      url: https://github.com/ayyubivh/curved_navigation_bar.git
+      ref: fix/add-custom-height
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  flutter_launcher_icons: ^0.14.3
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+    - assets/images/png/
+    - assets/lottie/
+    - assets/gif/
+
+  fonts:
+    - family: AppArabicFont
+      fonts:
+        - asset: assets/fonts/app_arabic_font.otf
+          weight: 700
+        - asset: assets/fonts/app_arabic_light_font.ttf
+          weight: 100
+        - asset: assets/fonts/app_arabic_light_font.ttf
+          weight: 200
+        - asset: assets/fonts/app_arabic_light_font.ttf
+          weight: 300
+
+    - family: AppEnglishFont
+      fonts:
+        - asset: assets/fonts/app_english_font.ttf
+          weight: 800
+        - asset: assets/fonts/app_english_font.ttf
+          weight: 700
+        - asset: assets/fonts/app_english_font.ttf
+          weight: 600
+        - asset: assets/fonts/app_english_font.ttf
+          weight: 500
+        - asset: assets/fonts/app_english_regular_font.ttf
+          weight: 400
+        - asset: assets/fonts/app_english_regular_font.ttf
+          weight: 300
+        - asset: assets/fonts/app_english_light_font.ttf
+          weight: 200
+        - asset: assets/fonts/app_english_light_font.ttf
+          weight: 100
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
+  min_sdk_android: 21
